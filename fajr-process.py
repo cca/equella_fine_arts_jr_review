@@ -48,14 +48,14 @@ def map_major(major):
         'CURPR.MA': 'Curatorial Practice (MA)',
         # 'DD2ST': '',
         'DESGN.MFA': 'Design (MFA)',
-        'DESST.MBA': 'MBA in Design Strategy',
+        'DESST.MBA': 'Design Strategy (MBA)',
         # 'DVCFA': '',
         # 'EXTED': '',
         'FASHN.BFA': 'Fashion Design (BFA)',
         'FCERM.MFA': 'Fine Arts (MFA)',
         'FDRPT.MFA': 'Fine Arts (MFA)',
         'FGLAS.MFA': 'Fine Arts (MFA)',
-        'FILMG.MFA': 'MFA in Film',
+        'FILMG.MFA': 'Film (MFA)',
         'FILMS.BFA': 'Film (BFA)',
         'FINAR.MFA': 'Fine Arts (MFA)',
         'FPHOT.MFA': 'Fine Arts (MFA)',
@@ -85,10 +85,10 @@ def map_major(major):
         'SCULP.BFA': 'Sculpture (BFA)',
         'TEXTL.BFA': 'Textiles (BFA)',
         'UNDEC.BFA': 'Undecided',
-        'VISCR.MA': 'Visual and Critical Studies (MA)',
+        'VISCR.MA': 'Visual & Critical Studies (MA)',
         'VISST.BA': 'Visual Studies (BA)',
         'WRITE.MFA': 'Writing (MFA)',
-        'WRLIT.BA': 'Writing and Literature (BA)'
+        'WRLIT.BA': 'Writing & Literature (BA)'
     }
 
     if major in translations:
