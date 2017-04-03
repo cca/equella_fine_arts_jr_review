@@ -3,3 +3,11 @@
 sort taxo.csv > tmp; mv tmp taxo.csv
 # upload it
 uptaxo --un $(jq -r .username ~/.equellarc) --pw $(jq -r .password ~/.equellarc) --csv taxo.csv --tid $(eq tax --name 'Fine Arts Junior Review students' | jq -r .uuid) --clear
+
+# give option to archive CSVs in data dir
+echo -n 'Archive fajr.csv & taxo.csv in the "data" directory? (y/n) '
+read -n 1 archive
+if [ $archive == 'y' ]; then
+    mv -v fajr.csv data/$(date "+%Y-%m-%d").csv
+    mv -v taxo.csv data/$(date "+%Y-%m-%d")-taxo.csv
+fi
