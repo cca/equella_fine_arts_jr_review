@@ -8,6 +8,7 @@ uptaxo --un $(jq -r .username ~/.equellarc) --pw $(jq -r .password ~/.equellarc)
 echo -n 'Archive fajr.csv & taxo.csv in the "data" directory? (y/n) '
 read -n 1 archive
 if [ $archive == 'y' ]; then
+    echo
     mv -v fajr.csv data/$(date "+%Y-%m-%d").csv
     mv -v taxo.csv data/$(date "+%Y-%m-%d")-taxo.csv
 fi
