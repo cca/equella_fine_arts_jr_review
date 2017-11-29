@@ -3,7 +3,7 @@
 Process Informer report into CSV fit for an EQUELLA taxonomy, upload to the appropriate taxonomy. The process looks like:
 
 - download CSV (column headers on) from Informer report "[LIB - EP - Library - Fine Arts Junior Review Students](https://vm-informer-01.cca.edu/informer/?locale=en_US#action=ReportRun&reportId=79626253&launch=false)" & name it fajr.csv
-- run `python fajr-process.py fajr.csv > taxo.csv` (1st argument is the Informer CSV)
+- run `./fajr-process.py fajr.csv > taxo.csv` (1st argument is the Informer CSV)
 - run `./upload.sh` (no arguments) to upload to EQUELLA, it expects a "taxo.csv" file
 - afterwards the upload script will archive fajr.csv and taxo.csv in a "data" directory
 
