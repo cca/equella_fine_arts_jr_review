@@ -12,14 +12,7 @@ an EQUELLA-ready taxonomy CSV to stdout.
 from __future__ import print_function
 import csv
 import sys
-
-
-def quote(str):
-    """
-    Wrap string in quotes
-    Useful for manually printing valid CSV data
-    """
-    return '"' + str + '"'
+from fajr_group import add_to_fajr_group
 
 
 def map_semester(semester):
@@ -30,7 +23,7 @@ def map_semester(semester):
     sem = semester.lower().replace('sp', ' Spring').replace('su', ' Summer').replace('fa', ' Fall')
     semlist = sem.split()
     semlist.reverse()
-    return quote(' '.join(semlist))
+    return ' '.join(semlist)
 
 
 def map_major(major):
@@ -78,7 +71,7 @@ def map_major(major):
         # 'MARC2.MARC': '',
         # 'MARC3.MARC': '',
         'METAL.BFA': 'Jewelry / Metal Arts (BFA)',
-        'NODEG.UG': 'Undecided',  # speculative
+        'NODEG.UG': 'Undecided',  # shouldn't appear in this context
         'PHOTO.BFA': 'Photography (BFA)',
         'PNTDR.BFA': 'Painting/Drawing (BFA)',
         'PRINT.BFA': 'Printmaking (BFA)',
@@ -92,7 +85,7 @@ def map_major(major):
     }
 
     if major in translations:
-        return quote(translations[major])
+        return translations[major]
     else:
         raise Exception('Cannot translate degree code into major! \
         Check the mappings.')
@@ -100,10 +93,23 @@ def map_major(major):
 
 with open(sys.argv[1]) as csvfile:
     reader = csv.DictReader(csvfile)
-    for row in reader:
-        out = quote(row['surname'] + ', ' + row['givenname'])
-        out += ',studentID,' + row['studentID']
-        out += ',username,' + row['username']
-        out += ',major,' + map_major(row['major'])
-        out += ',semester,' + map_semester(row['semester'])
-        print(out)
+    with open('taxo.csv', 'wb') as taxofile:
+        writer = csv.writer(taxofile, quoting=csv.QUOTE_ALL)
+        users = []
+        for row in reader:
+            writer.writerow([
+                row['surname'] + ', ' + row['givenname'],
+                'studentID',
+                row['studentID'],
+                'username',
+                row['username'],
+                'major',
+                map_major(row['major']),
+                'semester',
+                map_semester(row['semester']),
+            ])
+
+            users.append(row['username'])
+
+
+add_to_fajr_group(users)
