@@ -2,14 +2,13 @@ from __future__ import print_function
 import os
 import json
 import requests
-from pprint import pprint
 
 """
 Takes new usernames for FAJR students and adds them to the permissions group in
 EQUELLA using the API. Requires having a properly configured OAuth token in an
 ".equellarc" JSON file in your home directory (see equella-cli for details).
 """
-def add_to_fajr_group(users):
+def add_to_fajr_group(users, anima=False):
     # get equellarc JSON (only works on Linux/Mac)
     try:
         equellarc = json.load(open(os.getenv('HOME') + '/.equellarc'))
@@ -19,7 +18,13 @@ def add_to_fajr_group(users):
 
 
     # get group data from EQUELLA API
-    url = 'https://vault.cca.edu/api/usermanagement/local/group/80530ad8-3d08-4617-b99a-3de3f20fb587'
+    if anima:
+        # "FA JR film and animation students" group
+        uuid = '3a3eb91d-c96b-4e8c-8a4d-1910da66a7c0'
+    else:
+        # "FA JR exhibit students" group
+        uuid = '80530ad8-3d08-4617-b99a-3de3f20fb587'
+    url = 'https://vault.cca.edu/api/usermanagement/local/group/%s' % uuid
     headers = {
         'X-Authorization': 'access_token=' + equellarc['token'],
         'Content-Type': 'application/json'
@@ -48,4 +53,3 @@ def add_to_fajr_group(users):
     # triggered even on successful 200 requests
     print('Adding %i users to "FA JR exhibit students" group...' % num_new_users)
     p = requests.put(url, headers=headers, data=json.dumps(group))
-    pprint('HTTP response status: ', p.status_code)
