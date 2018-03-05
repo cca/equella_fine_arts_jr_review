@@ -9,7 +9,6 @@ an EQUELLA-ready taxonomy CSV to stdout.
 * https://vm-informer-01.cca.edu/informer/#action=ReportRun&reportId=79626253
 """
 
-from __future__ import print_function
 import csv
 import sys
 from fajr_group import add_to_fajr_group
@@ -93,7 +92,7 @@ def map_major(major):
 
 with open(sys.argv[1]) as csvfile:
     reader = csv.DictReader(csvfile)
-    with open('taxo.csv', 'wb') as taxofile:
+    with open('taxo.csv', 'w') as taxofile:
         writer = csv.writer(taxofile, quoting=csv.QUOTE_ALL)
         users = []
         for row in reader:
