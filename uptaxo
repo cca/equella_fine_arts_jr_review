@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # ################################# #
 # UploadTaxonomy.py                 #
 #                                   #
@@ -83,7 +83,7 @@ csvFileName = args.csv  # relative path to CSV file to load
 # ---- SETTINGS ---- #
 
 # EQUELLA parameters
-institutionUrl = 'http://vault.cca.edu'
+institutionUrl = 'https://vault.cca.edu'
 username = args.un
 password = args.pw
 
