@@ -48,7 +48,11 @@ def add_to_fajr_group(users, anima=False):
     # convert users _back_ to a list bc set is not JSON serializable
     group['users'] = list(group['users'])
 
+    if anima:
+        print('Adding %i users to "FA JR film and animation students" group...' % num_new_users)
+    else:
+        print('Adding %i users to "FA JR exhibit students" group...' % num_new_users)
+
     # tried wrapping the PUT in a try/except block but the exception always
-    # triggered even on successful 200 requests
-    print('Adding %i users to "FA JR exhibit students" group...' % num_new_users)
+    # triggered even on successful 200 requests :shrug:
     p = requests.put(url, headers=headers, data=json.dumps(group))

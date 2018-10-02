@@ -95,6 +95,7 @@ with open(sys.argv[1]) as csvfile:
     with open('taxo.csv', 'w') as taxofile:
         writer = csv.writer(taxofile, quoting=csv.QUOTE_ALL)
         users = []
+        anima_users = []
         for row in reader:
             writer.writerow([
                 row['surname'] + ', ' + row['givenname'],
@@ -109,6 +110,9 @@ with open(sys.argv[1]) as csvfile:
             ])
 
             users.append(row['username'])
+            if row['major'] == 'ANIMA.BFA' or row['major'] == 'FILMS.BFA':
+                anima_users.append(row['username'])
 
 
 add_to_fajr_group(users)
+add_to_fajr_group(anima_users, anima=True)
