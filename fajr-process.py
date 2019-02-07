@@ -16,7 +16,7 @@ from fajr_group import add_to_fajr_group
 
 def map_semester(semester):
     """
-    Turn Informer out like "2015SP" into human-friendly season & year
+    Turn semester code like "2015SP" into a human-friendly season & year
     such as "Spring 2015"
     """
     sem = semester.lower().replace('sp', ' Spring').replace('su', ' Summer').replace('fa', ' Fall')
@@ -29,6 +29,8 @@ def map_major(major):
     """
     Map five-letter.three-letter degree code into human-friendly major
     e.g. ANIMA.BFA => Animation (BFA)
+    We should really only need the Fine Arts majors here but including the
+    full list costs us nothing.
 
     Commented-out degree codes don't have a correlate in VAULT's Majors taxo
     """
