@@ -15,7 +15,6 @@ def add_to_fajr_group(users, anima=False):
         print('Error opening the ~/.equellarc file, make sure it exists & is valid JSON')
         exit(1)
 
-
     # get group data from EQUELLA API
     if anima:
         # "FA JR film and animation students" group

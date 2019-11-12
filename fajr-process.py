@@ -1,28 +1,16 @@
 #!/usr/bin/env python
 """
-Usage: python fajr-process.py input.csv
+Usage: python fajr-process.py input.csv 2019FA
 
-Takes Informer CSV export from TEST - EP - Fine Arts Junior Review Students*
-report (use column headers & comma-separated multivalue fields) & then prints
-an EQUELLA-ready taxonomy CSV to stdout.
-
-* https://vm-informer-01.cca.edu/informer/#action=ReportRun&reportId=79626253
+Takes CSV of Fine Arts juniors with their ID, names, majors, plus usernames &
+then creates an EQUELLA-ready taxonomy CSV named "taxo.csv".
 """
 
 import csv
+import os
 import sys
+
 from fajr_group import add_to_fajr_group
-
-
-def map_semester(semester):
-    """
-    Turn semester code like "2015SP" into a human-friendly season & year
-    such as "Spring 2015"
-    """
-    sem = semester.lower().replace('sp', ' Spring').replace('su', ' Summer').replace('fa', ' Fall')
-    semlist = sem.split()
-    semlist.reverse()
-    return ' '.join(semlist)
 
 
 def map_major(major):
@@ -75,7 +63,7 @@ def map_major(major):
         'NODEG.UG': 'Undecided',  # shouldn't appear in this context
         'PHOTO.BFA': 'Photography (BFA)',
         'PNTDR.BFA': 'Painting/Drawing (BFA)',
-        'PRINT.BFA': 'Printmaking (BFA)',
+        'PRINT.BFA': 'Printmedia (BFA)',
         'SCULP.BFA': 'Sculpture (BFA)',
         'TEXTL.BFA': 'Textiles (BFA)',
         'UNDEC.BFA': 'Undecided',
@@ -87,12 +75,15 @@ def map_major(major):
 
     if major in translations:
         return translations[major]
+    # handle if Fine Arts sends us non-code versions of majors
+    elif "{} (BFA)".format(major) in translations.values():
+        return "{} (BFA)".format(major)
     else:
-        raise Exception('Cannot translate degree code into major! \
-        Check the mappings.')
+        raise Exception('Cannot translate degree code into major! Check the mappings.')
 
-
-with open(sys.argv[1]) as csvfile:
+filename = sys.argv[1]
+semester = sys.argv[2]
+with open(filename) as csvfile:
     reader = csv.DictReader(csvfile)
     with open('taxo.csv', 'w') as taxofile:
         writer = csv.writer(taxofile, quoting=csv.QUOTE_ALL)
@@ -108,13 +99,14 @@ with open(sys.argv[1]) as csvfile:
                 'major',
                 map_major(row['major']),
                 'semester',
-                map_semester(row['semester']),
+                semester,
             ])
 
             users.append(row['username'])
-            if row['major'] == 'ANIMA.BFA' or row['major'] == 'FILMS.BFA':
+            if map_major(row['major']) in ['Animation (BFA)', 'Film (BFA)']:
                 anima_users.append(row['username'])
 
-
+print('Wrote EQUELLA taxonomy file to taxo.csv.')
 add_to_fajr_group(users)
 add_to_fajr_group(anima_users, anima=True)
+os.system('./upload.sh')

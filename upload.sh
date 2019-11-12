@@ -2,7 +2,7 @@
 # sort the taxonomy, just helps when reading through it in admin console
 sort taxo.csv > tmp; mv tmp taxo.csv
 # upload it
-uptaxo --un $(jq -r .username ~/.equellarc) --pw $(jq -r .password ~/.equellarc) --csv taxo.csv --tid $(eq tax --name 'Fine Arts Junior Review students' | jq -r .uuid) --clear
+python uptaxo --un $(jq -r .username ~/.equellarc) --pw $(jq -r .password ~/.equellarc) --csv taxo.csv --tid $(eq tax --name 'Fine Arts Junior Review students' | jq -r .uuid) --start 2
 
 # give option to archive CSVs in data dir
 echo -n 'Archive fajr.csv & taxo.csv in the "data" directory? (y/n) '
