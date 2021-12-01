@@ -3,7 +3,7 @@
 Usage: python fajr-process.py input.csv 2019FA
 
 Takes CSV of Fine Arts juniors with their ID, names, majors, plus usernames &
-then creates an EQUELLA-ready taxonomy CSV named "taxo.csv".
+then creates an EQUELLA-ready taxonomy CSV named "taxo.csv" and uploads it.
 """
 
 import csv
@@ -28,11 +28,8 @@ def map_major(major):
         'CERAM.BFA': 'Ceramics (BFA)',
         'COMAR.BFA': 'Community Arts (BFA)',
         'CURPR.MA': 'Curatorial Practice (MA)',
-        # 'DD2ST': '',
         'DESGN.MFA': 'Design (MFA)',
         'DESST.MBA': 'Design Strategy (MBA)',
-        # 'DVCFA': '',
-        # 'EXTED': '',
         'FASHN.BFA': 'Fashion Design (BFA)',
         'FCERM.MFA': 'Fine Arts (MFA)',
         'FDRPT.MFA': 'Fine Arts (MFA)',
@@ -50,19 +47,19 @@ def map_major(major):
         'GRAPH.BFA': 'Graphic Design (BFA)',
         'GRAPH.MFA': 'Fine Arts (MFA)',
         'ILLUS.BFA': 'Illustration (BFA)',
-        # 'INACT.MFA': '',
         'INDIV.BFA': 'Individualized (BFA)',
+        'Individualized Studies': 'Individualized (BFA)',
         'INDUS.BFA': 'Industrial Design (BFA)',
         'INDUS.MFA': 'Industrial Design (MFA)',
         'INTER.BFA': 'Interior Design (BFA)',
         'IXDSN.BFA': 'Interaction Design (BFA)',
         'MAAD1.MAAD': 'Master of Advanced Architectural Design (MAAD)',
-        # 'MARC2.MARC': '',
-        # 'MARC3.MARC': '',
         'METAL.BFA': 'Jewelry / Metal Arts (BFA)',
+        'Jewelry and Metal Arts': 'Jewelry / Metal Arts (BFA)',
         'NODEG.UG': 'Undecided',  # shouldn't appear in this context
         'PHOTO.BFA': 'Photography (BFA)',
         'PNTDR.BFA': 'Painting/Drawing (BFA)',
+        'Painting and Drawing': 'Painting/Drawing (BFA)',
         'PRINT.BFA': 'Printmedia (BFA)',
         'SCULP.BFA': 'Sculpture (BFA)',
         'TEXTL.BFA': 'Textiles (BFA)',
@@ -79,7 +76,7 @@ def map_major(major):
     elif "{} (BFA)".format(major) in translations.values():
         return "{} (BFA)".format(major)
     else:
-        raise Exception('Cannot translate degree code into major! Check the mappings.')
+        raise Exception('Cannot translate degree code "{}" into major! Check the mappings.'.format(major))
 
 filename = sys.argv[1]
 semester = sys.argv[2]
