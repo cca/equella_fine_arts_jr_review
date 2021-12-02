@@ -1,3 +1,5 @@
+**This repo is defunct**. See [cca/equella_scripts/fine-arts-jr-review](https://github.com/cca/equella_scripts/tree/main/fine-arts-jr-review) for its current status.
+
 # Fine Arts Junior Review
 
 These scripts help with Fine Arts Junior Review in VAULT. They perform two actions:
